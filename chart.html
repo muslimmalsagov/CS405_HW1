@@ -32,16 +32,16 @@
 
         const svg = document.getElementById("chart");
 
-        // Define the maximum values for the Y-axes
+        // Defining the maximum values for Y-axises
         const maxYValue = 7000; // Maximum number of suicides
         const maxRateValue = 6; // Maximum suicide rate
 
-        // Create scales for X and Y axes
-        const xScale = (d) => (d.year - 2010) * 60 + 70; // Adjust the spacing and position
+        // Creating the scales for X and Y axes with corresponding positions 
+        const xScale = (d) => (d.year - 2010) * 60 + 70; 
         const yScaleSuicides = (d) => height - margin.bottom - (d.suicides / maxYValue) * (height - margin.top - margin.bottom);
         const yScaleRate = (d) => height - margin.bottom - (d.rate / maxRateValue) * (height - margin.top - margin.bottom);
 
-        // Create a title for the chart
+        // Creating a title for the chart above it 
         const title = document.createElementNS("http://www.w3.org/2000/svg", "text");
         title.setAttribute("x", width / 2);
         title.setAttribute("y", margin.top );
@@ -50,7 +50,7 @@
         title.textContent = "Crude Suicide Rate 2010-2022";
         svg.appendChild(title);
 
-        // Create bars for number of suicides
+        // Create chart bars for number of suicides (for loop for each iteration, with adjusted positions manually)
         data.forEach((d) => {
             const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
             rect.setAttribute("x", xScale(d)); // Adjust the position and width
@@ -60,7 +60,7 @@
             rect.setAttribute("fill", "steelblue");
             svg.appendChild(rect);
 
-            // Add year labels on the X-axis
+            // Adding year labels on the X-axis (below the bars)
             const yearLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
             yearLabel.setAttribute("x", xScale(d)); // Adjust the label position
             yearLabel.setAttribute("y", height - 10);
@@ -80,22 +80,22 @@
 
 
         });
-        // Create red dots and lines for suicide rate
+        // Creating red dots and lines for suicide rate
         data.forEach((d, i) => {
             // Create red dots for suicide rate
             const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-            dot.setAttribute("cx", xScale(d) + 15); // Adjust the dot position to the right
-            dot.setAttribute("cy", yScaleRate(d)); // Use yScaleRate to correctly position the dot
-            dot.setAttribute("r", 4); // Adjust the dot size as needed
+            dot.setAttribute("cx", xScale(d) + 15); // Adjusting the dot position to the right
+            dot.setAttribute("cy", yScaleRate(d)); 
+            dot.setAttribute("r", 4); 
             dot.setAttribute("fill", "red");
             svg.appendChild(dot);
 
             if (i > 0) {
-                // Create lines connecting dots
+                // Create red lines connecting dots (for a vizual effect)
                 const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
-                line.setAttribute("x1", xScale(data[i - 1]) + 15); // Adjust the line position
+                line.setAttribute("x1", xScale(data[i - 1]) + 15); // Adjusting the line position
                 line.setAttribute("y1", yScaleRate(data[i - 1]));
-                line.setAttribute("x2", xScale(d) + 15); // Adjust the line position
+                line.setAttribute("x2", xScale(d) + 15);
                 line.setAttribute("y2", yScaleRate(d));
                 line.setAttribute("stroke", "red");
                 svg.appendChild(line);
@@ -103,16 +103,16 @@
 
             // Add suicide rate labels above the dots
             const rateLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
-            rateLabel.setAttribute("x", xScale(d) + 15); // Adjust the label position to the right
-            rateLabel.setAttribute("y", yScaleRate(d) - 8); // Adjust the vertical position
+            rateLabel.setAttribute("x", xScale(d) + 15); 
+            rateLabel.setAttribute("y", yScaleRate(d) - 8); 
             rateLabel.setAttribute("font-size", "12px");
             rateLabel.setAttribute("fill", "red");
-            rateLabel.textContent = d.rate.toFixed(2); // Display two decimal places
+            rateLabel.textContent = d.rate.toFixed(2); //for 2 decimal numbers
             svg.appendChild(rateLabel);
         });
 
 
-        // Create X and Y axes
+        // Creating vizualization for X and Y axes
         const xAxis = document.createElementNS("http://www.w3.org/2000/svg", "line");
         xAxis.setAttribute("x1", margin.left);
         xAxis.setAttribute("x2", width - margin.right);
@@ -120,7 +120,7 @@
         xAxis.setAttribute("y2", height - margin.bottom);
         xAxis.setAttribute("stroke", "black");
         svg.appendChild(xAxis);
-
+        //left y-axis
         const yAxisSuicides = document.createElementNS("http://www.w3.org/2000/svg", "line");
         yAxisSuicides.setAttribute("x1", margin.left);
         yAxisSuicides.setAttribute("x2", margin.left);
@@ -128,7 +128,7 @@
         yAxisSuicides.setAttribute("y2", height - margin.bottom);
         yAxisSuicides.setAttribute("stroke", "black");
         svg.appendChild(yAxisSuicides);
-
+        //right y-axis
         const yAxisRate = document.createElementNS("http://www.w3.org/2000/svg", "line");
         yAxisRate.setAttribute("x1", width - margin.right);
         yAxisRate.setAttribute("x2", width - margin.right);
@@ -137,7 +137,7 @@
         yAxisRate.setAttribute("stroke", "black");
         svg.appendChild(yAxisRate);
 
-        // Add Y-axis scale labels for suicides
+        // Add Y-axis scale labels for suicide numbers (left y-axis)
         for (let i = 0; i <= maxYValue; i += 1000) {
             const scaleLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
             scaleLabel.setAttribute("x", margin.left - 30);
@@ -147,7 +147,7 @@
             svg.appendChild(scaleLabel);
         }
 
-        // Add Y-axis scale labels for suicide rate
+        // Add Y-axis scale labels for suicide rate (right y-axis)
         for (let i = 0; i <= maxRateValue; i += 1) {
             const rateScaleLabel = document.createElementNS("http://www.w3.org/2000/svg", "text");
             rateScaleLabel.setAttribute("x", width - margin.right + 10);
@@ -157,14 +157,15 @@
             svg.appendChild(rateScaleLabel);
         }
 
-        // Add labels for Y-axes
+        // Add labels/name above for left Y-axes
         const yAxisLabelSuicides = document.createElementNS("http://www.w3.org/2000/svg", "text");
         yAxisLabelSuicides.setAttribute("x", margin.left - 40);
         yAxisLabelSuicides.setAttribute("y", margin.top - 10);
         yAxisLabelSuicides.setAttribute("font-size", "14px");
         yAxisLabelSuicides.textContent = "Number of Suicides";
         svg.appendChild(yAxisLabelSuicides);
-
+        
+        // Add labels/name above for right Y-axes
         const yAxisLabelRate = document.createElementNS("http://www.w3.org/2000/svg", "text");
         yAxisLabelRate.setAttribute("x", width - margin.right + 20);
         yAxisLabelRate.setAttribute("y", margin.top - 10);
